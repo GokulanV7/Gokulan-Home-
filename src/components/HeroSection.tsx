@@ -1,37 +1,20 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import ProfilePhoto from './ProfilePhoto';
 import ParallaxSection from './ParallaxSection';
+import { createMouseParallaxEffect } from '@/utils/parallaxUtils';
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      
-      const elements = containerRef.current.querySelectorAll('.parallax-mouse');
-      const container = containerRef.current.getBoundingClientRect();
-      
-      const mouseX = e.clientX - container.left;
-      const mouseY = e.clientY - container.top;
-      
-      const centerX = container.width / 2;
-      const centerY = container.height / 2;
-      
-      elements.forEach((element, i) => {
-        const depth = parseFloat((element as HTMLElement).dataset.depth || '0.05');
-        const moveX = (mouseX - centerX) * depth;
-        const moveY = (mouseY - centerY) * depth;
-        
-        (element as HTMLElement).style.transform = `translate(${moveX}px, ${moveY}px)`;
-      });
-    };
+    const container = containerRef.current;
+    if (!container) return;
     
-    document.addEventListener('mousemove', handleMouseMove);
+    const cleanup = createMouseParallaxEffect(container);
     
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
+      cleanup();
     };
   }, []);
   
@@ -76,6 +59,7 @@ const HeroSection = () => {
               src="/placeholder.svg" 
               alt="Gokulan" 
               className="parallax-mouse z-10" 
+              data-depth="0.01"
             />
             <div className="absolute -z-10 w-72 h-72 rounded-full bg-purple-500/20 blur-3xl -bottom-10 -right-10 parallax-mouse" data-depth="0.05"></div>
           </div>

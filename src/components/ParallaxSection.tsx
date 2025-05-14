@@ -19,25 +19,32 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
     const section = sectionRef.current;
     if (!section) return;
     
-    let startScrollPosition = section.offsetTop - window.innerHeight;
+    const initialOffset = window.scrollY + section.getBoundingClientRect().top;
     
     const handleScroll = () => {
       if (!section) return;
       
       const scrollPosition = window.scrollY;
-      const offset = (scrollPosition - startScrollPosition) * speed;
+      const windowHeight = window.innerHeight;
+      const elementTop = section.getBoundingClientRect().top;
+      const elementHeight = section.getBoundingClientRect().height;
       
-      if (scrollPosition >= startScrollPosition) {
+      // Only apply parallax when in view
+      if (elementTop < windowHeight && elementTop + elementHeight > 0) {
+        const offset = (scrollPosition - initialOffset) * speed;
         section.style.transform = `translateY(${offset}px)`;
       }
     };
     
     window.addEventListener('scroll', handleScroll);
+    // Initialize position
+    handleScroll();
+    
     return () => window.removeEventListener('scroll', handleScroll);
   }, [speed]);
   
   return (
-    <div ref={sectionRef} className={cn("parallax-element transition-transform duration-300", className)}>
+    <div ref={sectionRef} className={cn("transition-transform duration-300", className)}>
       {children}
     </div>
   );

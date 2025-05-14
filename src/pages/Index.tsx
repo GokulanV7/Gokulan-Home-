@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import HeroSection from '@/components/HeroSection';
 import TechStack from '@/components/TechStack';
 import ProjectsSection from '@/components/ProjectsSection';
@@ -7,13 +7,22 @@ import ContactSection from '@/components/ContactSection';
 import { useParallaxElements } from '@/utils/parallaxUtils';
 
 const Index = () => {
+  const cleanupRef = useRef<() => void>();
+  
   useEffect(() => {
     // Initialize parallax effects after component mounts
-    const initParallax = setTimeout(() => {
-      useParallaxElements();
-    }, 100);
+    // Allow some time for the DOM to fully load
+    const initTimeout = setTimeout(() => {
+      cleanupRef.current = useParallaxElements();
+    }, 300);
     
-    return () => clearTimeout(initParallax);
+    return () => {
+      clearTimeout(initTimeout);
+      // Clean up parallax effects
+      if (cleanupRef.current) {
+        cleanupRef.current();
+      }
+    };
   }, []);
 
   return (
