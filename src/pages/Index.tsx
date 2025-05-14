@@ -4,20 +4,20 @@ import HeroSection from '@/components/HeroSection';
 import TechStack from '@/components/TechStack';
 import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
-import { useParallaxElements } from '@/utils/parallaxUtils';
+import { applyParallaxToElements } from '@/utils/parallaxUtils';
 
 const Index = () => {
   const cleanupRef = useRef<() => void>();
   
   useEffect(() => {
-    // Initialize parallax effects after component mounts
-    // Allow some time for the DOM to fully load
-    const initTimeout = setTimeout(() => {
-      cleanupRef.current = useParallaxElements();
-    }, 300);
+    // Initialize enhanced parallax effects after component mounts
+    const initParallax = async () => {
+      cleanupRef.current = await applyParallaxToElements();
+    };
+    
+    initParallax();
     
     return () => {
-      clearTimeout(initTimeout);
       // Clean up parallax effects
       if (cleanupRef.current) {
         cleanupRef.current();

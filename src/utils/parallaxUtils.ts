@@ -1,8 +1,9 @@
 
-export function createParallaxEffect(element: HTMLElement, speed: number = 0.5) {
+export function createParallaxEffect(element: HTMLElement, speed: number = 0.5, direction: 'vertical' | 'horizontal' = 'vertical', reverse: boolean = false) {
   if (!element) return () => {};
   
   const initialOffset = window.scrollY + element.getBoundingClientRect().top;
+  const speedFactor = speed * (reverse ? -1 : 1);
   
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
@@ -10,10 +11,15 @@ export function createParallaxEffect(element: HTMLElement, speed: number = 0.5) 
     const elementTop = element.getBoundingClientRect().top;
     const elementHeight = element.getBoundingClientRect().height;
     
-    // Check if element is in viewport
-    if (elementTop < windowHeight && elementTop + elementHeight > 0) {
-      const offset = (scrollPosition - initialOffset) * speed;
-      element.style.transform = `translateY(${offset}px)`;
+    // Check if element is in viewport with added buffer
+    if (elementTop < windowHeight + 100 && elementTop + elementHeight > -100) {
+      const offset = (scrollPosition - initialOffset) * speedFactor;
+      
+      if (direction === 'horizontal') {
+        element.style.transform = `translateX(${offset}px)`;
+      } else {
+        element.style.transform = `translateY(${offset}px)`;
+      }
     }
   };
   
@@ -29,9 +35,17 @@ export function useParallaxElements() {
   const cleanupFunctions: Array<() => void> = [];
   
   elements.forEach((element, index) => {
-    // Different speeds for different elements
+    // Different speeds and directions for varied effects
     const speed = 0.1 + (index * 0.05);
-    const cleanup = createParallaxEffect(element as HTMLElement, speed);
+    const direction = index % 2 === 0 ? 'vertical' : 'horizontal';
+    const reverse = index % 3 === 0;
+    
+    const cleanup = createParallaxEffect(
+      element as HTMLElement, 
+      speed, 
+      direction,
+      reverse
+    );
     cleanupFunctions.push(cleanup);
   });
   
@@ -41,29 +55,86 @@ export function useParallaxElements() {
 export function createMouseParallaxEffect(container: HTMLElement) {
   if (!container) return () => {};
   
-  const elements = container.querySelectorAll('.parallax-mouse');
+  const elements = container.querySelectorAll('[data-parallax-mouse]');
+  let lastMouseX = 0;
+  let lastMouseY = 0;
+  let animationFrame: number | null = null;
+  
+  const animate = () => {
+    elements.forEach((element) => {
+      const el = element as HTMLElement;
+      const depth = parseFloat(el.dataset.depth || '0.05');
+      const direction = el.dataset.direction || 'both';
+      const inverse = el.dataset.inverse === 'true';
+      const factor = inverse ? -1 : 1;
+      
+      let moveX = 0;
+      let moveY = 0;
+      
+      if (direction === 'both' || direction === 'horizontal') {
+        moveX = lastMouseX * depth * factor;
+      }
+      
+      if (direction === 'both' || direction === 'vertical') {
+        moveY = lastMouseY * depth * factor;
+      }
+      
+      el.style.transform = `translate3d(${moveX}px, ${moveY}px, 0)`;
+      el.style.transition = 'transform 0.2s cubic-bezier(0.33, 1, 0.68, 1)';
+    });
+    
+    animationFrame = null;
+  };
   
   const handleMouseMove = (e: MouseEvent) => {
     const containerRect = container.getBoundingClientRect();
     
-    const mouseX = e.clientX - containerRect.left;
-    const mouseY = e.clientY - containerRect.top;
+    const mouseX = (e.clientX - containerRect.left - containerRect.width / 2) / 20;
+    const mouseY = (e.clientY - containerRect.top - containerRect.height / 2) / 20;
     
-    const centerX = containerRect.width / 2;
-    const centerY = containerRect.height / 2;
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
     
-    elements.forEach((element) => {
-      const depth = parseFloat((element as HTMLElement).dataset.depth || '0.05');
-      const moveX = (mouseX - centerX) * depth;
-      const moveY = (mouseY - centerY) * depth;
-      
-      (element as HTMLElement).style.transform = `translate(${moveX}px, ${moveY}px)`;
-    });
+    if (!animationFrame) {
+      animationFrame = requestAnimationFrame(animate);
+    }
   };
   
-  document.addEventListener('mousemove', handleMouseMove);
+  container.addEventListener('mousemove', handleMouseMove);
   
   return () => {
-    document.removeEventListener('mousemove', handleMouseMove);
+    container.removeEventListener('mousemove', handleMouseMove);
+    if (animationFrame) {
+      cancelAnimationFrame(animationFrame);
+    }
   };
+}
+
+export function applyParallaxToElements() {
+  return new Promise<() => void>((resolve) => {
+    setTimeout(() => {
+      // Apply to all elements with data-parallax attribute
+      const parallaxElements = document.querySelectorAll('[data-parallax]');
+      const cleanupFunctions: Array<() => void> = [];
+      
+      parallaxElements.forEach((el) => {
+        const element = el as HTMLElement;
+        const speed = parseFloat(element.dataset.speed || '0.1');
+        const direction = element.dataset.direction as 'vertical' | 'horizontal' || 'vertical';
+        const reverse = element.dataset.reverse === 'true';
+        
+        const cleanup = createParallaxEffect(element, speed, direction, reverse);
+        cleanupFunctions.push(cleanup);
+      });
+      
+      // Apply mouse parallax to containers
+      const mouseContainers = document.querySelectorAll('[data-parallax-container]');
+      mouseContainers.forEach((container) => {
+        const cleanup = createMouseParallaxEffect(container as HTMLElement);
+        cleanupFunctions.push(cleanup);
+      });
+      
+      resolve(() => cleanupFunctions.forEach(fn => fn()));
+    }, 200);
+  });
 }

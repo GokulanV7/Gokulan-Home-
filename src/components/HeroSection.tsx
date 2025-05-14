@@ -21,12 +21,13 @@ const HeroSection = () => {
   return (
     <div 
       ref={containerRef} 
+      data-parallax-container
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-gray-900 to-black"></div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center z-10 max-w-6xl mx-auto px-4">
-        <ParallaxSection className="flex flex-col items-center md:items-start" speed={0.05}>
+        <ParallaxSection className="flex flex-col items-center md:items-start" speed={0.05} direction="vertical" intensity="light">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 text-white text-gradient">Gokulan</h1>
           <div className="h-1 w-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mb-6"></div>
           <h2 className="text-xl md:text-2xl font-medium mb-4 text-gray-300">
@@ -52,16 +53,22 @@ const HeroSection = () => {
           </div>
         </ParallaxSection>
         
-        <ParallaxSection className="flex justify-center" speed={0.1}>
+        <ParallaxSection className="flex justify-center" speed={0.1} direction="vertical" reverse>
           <div className="relative">
-            <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-30 blur-3xl parallax-mouse" data-depth="0.02"></div>
+            <div 
+              className="absolute -inset-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-30 blur-3xl" 
+              data-parallax-mouse data-depth="0.02" data-direction="both"
+            ></div>
             <ProfilePhoto 
               src="/placeholder.svg" 
               alt="Gokulan" 
-              className="parallax-mouse z-10" 
-              data-depth="0.01"
+              className="z-10" 
+              data-parallax-mouse data-depth="0.01" data-direction="both"
             />
-            <div className="absolute -z-10 w-72 h-72 rounded-full bg-purple-500/20 blur-3xl -bottom-10 -right-10 parallax-mouse" data-depth="0.05"></div>
+            <div 
+              className="absolute -z-10 w-72 h-72 rounded-full bg-purple-500/20 blur-3xl -bottom-10 -right-10" 
+              data-parallax-mouse data-depth="0.05" data-direction="both" data-inverse="true"
+            ></div>
           </div>
         </ParallaxSection>
       </div>
@@ -84,9 +91,23 @@ const HeroSection = () => {
         </svg>
       </div>
       
-      {/* Decorative elements */}
-      <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-purple-500/10 blur-3xl parallax-mouse" data-depth="0.03"></div>
-      <div className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-pink-500/10 blur-3xl parallax-mouse" data-depth="0.02"></div>
+      {/* Enhanced decorative elements with parallax */}
+      <div 
+        className="absolute top-20 left-20 w-40 h-40 rounded-full bg-purple-500/10 blur-3xl" 
+        data-parallax-mouse data-depth="0.03" data-direction="horizontal"
+      ></div>
+      <div 
+        className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-pink-500/10 blur-3xl" 
+        data-parallax-mouse data-depth="0.02" data-direction="vertical" data-inverse="true"
+      ></div>
+      <div 
+        className="absolute top-1/4 right-1/4 w-20 h-20 rounded-full bg-blue-500/10 blur-2xl hidden md:block" 
+        data-parallax-mouse data-depth="0.04" data-direction="both"
+      ></div>
+      <div 
+        className="absolute bottom-1/3 left-1/4 w-32 h-32 rounded-full bg-green-500/5 blur-2xl hidden md:block" 
+        data-parallax-mouse data-depth="0.025" data-direction="both" data-inverse="true"
+      ></div>
     </div>
   );
 };
