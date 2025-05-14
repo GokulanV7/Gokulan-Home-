@@ -1,4 +1,6 @@
 
+import { useInView } from 'react-intersection-observer';
+
 export function createParallaxEffect(element: HTMLElement, speed: number = 0.5, direction: 'vertical' | 'horizontal' = 'vertical', reverse: boolean = false) {
   if (!element) return () => {};
   
@@ -16,9 +18,9 @@ export function createParallaxEffect(element: HTMLElement, speed: number = 0.5, 
       const offset = (scrollPosition - initialOffset) * speedFactor;
       
       if (direction === 'horizontal') {
-        element.style.transform = `translateX(${offset}px)`;
+        element.style.transform = `translate3d(${offset}px, 0, 0)`;
       } else {
-        element.style.transform = `translateY(${offset}px)`;
+        element.style.transform = `translate3d(0, ${offset}px, 0)`;
       }
     }
   };
@@ -31,7 +33,7 @@ export function createParallaxEffect(element: HTMLElement, speed: number = 0.5, 
 }
 
 export function useParallaxElements() {
-  const elements = document.querySelectorAll('.parallax-element');
+  const elements = document.querySelectorAll('[data-parallax]');
   const cleanupFunctions: Array<() => void> = [];
   
   elements.forEach((element, index) => {
@@ -100,10 +102,30 @@ export function createMouseParallaxEffect(container: HTMLElement) {
     }
   };
   
+  const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
+    if (e.beta === null || e.gamma === null) return;
+    
+    const beta = e.beta; // -180 to 180 (x-axis)
+    const gamma = e.gamma; // -90 to 90 (y-axis)
+    
+    // Normalize values to be similar to mouse movement range
+    const moveX = (gamma / 9);
+    const moveY = (beta / 9);
+    
+    lastMouseX = moveX;
+    lastMouseY = moveY;
+    
+    if (!animationFrame) {
+      animationFrame = requestAnimationFrame(animate);
+    }
+  };
+  
   container.addEventListener('mousemove', handleMouseMove);
+  window.addEventListener('deviceorientation', handleDeviceOrientation);
   
   return () => {
     container.removeEventListener('mousemove', handleMouseMove);
+    window.removeEventListener('deviceorientation', handleDeviceOrientation);
     if (animationFrame) {
       cancelAnimationFrame(animationFrame);
     }
@@ -137,4 +159,14 @@ export function applyParallaxToElements() {
       resolve(() => cleanupFunctions.forEach(fn => fn()));
     }, 200);
   });
+}
+
+export function useParallaxInView(options = {}) {
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: false,
+    ...options
+  });
+  
+  return { ref, inView };
 }
