@@ -86,10 +86,8 @@ const ParallaxSection: React.FC<ParallaxSectionProps> = ({
     <div 
       ref={sectionRef} 
       className={cn(
-        "will-change-transform", 
+        "will-change-transform opacity-100",
         {
-          "opacity-0 translate-y-4": !isVisible,
-          "opacity-100 translate-y-0 transition-all duration-700 ease-out": isVisible,
           "bg-white/5 dark:bg-black/5": themeAware
         },
         className

@@ -2,17 +2,18 @@
 import React from 'react';
 import { useTheme } from './ThemeProvider';
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Mail, PhoneCall } from 'lucide-react';
+import { Github, Linkedin, Mail, PhoneCall, Download } from 'lucide-react';
+import { downloadResume } from '@/utils/downloadUtils';
 
 const Footer: React.FC = () => {
   const { theme } = useTheme();
   const year = new Date().getFullYear();
   
   return (
-    <footer className={`py-12 ${theme === 'dark' ? 
+    <footer className={`relative z-20 py-12 ${theme === 'dark' ? 
       'bg-gray-900 border-t border-gray-800' : 
       'bg-gray-50 border-t border-gray-200'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <Link to="/" className="inline-block mb-4">
@@ -87,6 +88,17 @@ const Footer: React.FC = () => {
                   Contact
                 </Link>
               </li>
+              <li>
+                <button 
+                  onClick={downloadResume}
+                  className={`w-full text-left relative z-30 ${theme === 'dark' ? 
+                    'text-gray-400 hover:text-white' : 
+                    'text-gray-600 hover:text-gray-900'} transition-colors flex items-center gap-1 hover:z-40`}
+                >
+                  <Download className="h-4 w-4" />
+                  Download Resume
+                </button>
+              </li>
             </ul>
           </div>
           
@@ -98,14 +110,14 @@ const Footer: React.FC = () => {
               <ul className="space-y-2">
                 <li className={`flex items-center gap-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                   <Mail className="h-4 w-4" />
-                  <a href="mailto:gokulan@example.com" className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-gray-900'}`}>
-                    gokulan@example.com
+                  <a href="mailto:gokulhope97@gmail.com" className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                    gokulhope97@gmail.com
                   </a>
                 </li>
                 <li className={`flex items-center gap-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                   <PhoneCall className="h-4 w-4" />
-                  <a href="tel:+919876543210" className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-gray-900'}`}>
-                    +91 98765 43210
+                  <a href="tel:+919361620860" className={`${theme === 'dark' ? 'hover:text-white' : 'hover:text-gray-900'}`}>
+                    +91 93616 20860
                   </a>
                 </li>
                 <li className={`flex items-start gap-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>

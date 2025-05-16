@@ -36,10 +36,10 @@ const Videos = () => {
   ];
   
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-950' : 'bg-white'}`}>
+    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-950' : 'bg-white'} px-4 sm:px-8 lg:px-12`}>
       <Navbar />
       
-      <div className="pt-24 pb-16">
+      <div className="pt-24 pb-24 space-y-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <ParallaxSection speed={0.05}>
             <h1 className={`text-4xl md:text-5xl font-bold mb-4 text-center ${theme === 'dark' ? 'text-gradient' : 'text-gradient-light'}`}>
@@ -50,7 +50,7 @@ const Videos = () => {
             </p>
           </ParallaxSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {videos.map((video, index) => (
               <ParallaxSection key={index} speed={0.05 + (index * 0.02)}>
                 <a 

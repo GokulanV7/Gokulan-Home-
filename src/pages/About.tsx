@@ -2,8 +2,10 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import ParallaxSection from '@/components/ParallaxSection';
+import ProfilePhoto from '@/components/ProfilePhoto';
 import { useTheme } from '@/components/ThemeProvider';
-import { FileText, Github, Linkedin } from 'lucide-react';
+import { FileText, Github, Linkedin, Code, Cpu, Database, Smartphone } from 'lucide-react';
+import Profile3D from '@/components/Flutter3DLogo';
 
 const About = () => {
   const { theme } = useTheme();
@@ -22,42 +24,42 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="md:col-span-2">
                 <ParallaxSection speed={0.1} className="space-y-6">
-                  <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <p className={`text-lg leading-relaxed text-justify ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     I'm Gokulan, a passionate Flutter developer and Computer Science student at Shri Shakthi College. I build elegant cross-platform apps and AI-driven systems using Flutter, Python, FastAPI, and ML.
                   </p>
                   
-                  <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <p className={`text-lg leading-relaxed text-justify ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     I've worked on projects like FALO AI (Top 12 Finalist) and a real-time face recognition system. My expertise spans from front-end mobile development to backend engineering and machine learning integration.
                   </p>
                   
-                  <p className={`text-lg ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                  <p className={`text-lg leading-relaxed text-justify ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and sharing knowledge with the developer community.
                   </p>
                   
-                  <div className="flex flex-wrap gap-4 pt-4">
+                  <div className="flex flex-wrap gap-4 pt-4 justify-center">
                     <a 
                       href="#" 
-                      className={`flex items-center gap-2 px-5 py-3 rounded-lg ${theme === 'dark' ? 
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg ${theme === 'dark' ? 
                         'bg-purple-600 hover:bg-purple-700' : 
-                        'bg-purple-500 hover:bg-purple-600'} text-white transition-colors`}
+                        'bg-purple-500 hover:bg-purple-600'} text-white transition-colors min-w-[120px]`}
                     >
                       <FileText size={18} />
                       Download Resume
                     </a>
                     <a 
                       href="#" 
-                      className={`flex items-center gap-2 px-5 py-3 rounded-lg ${theme === 'dark' ? 
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg ${theme === 'dark' ? 
                         'bg-gray-800 hover:bg-gray-700' : 
-                        'bg-gray-200 hover:bg-gray-300'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'} transition-colors`}
+                        'bg-gray-200 hover:bg-gray-300'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'} transition-colors min-w-[120px]`}
                     >
                       <Github size={18} />
                       GitHub
                     </a>
                     <a 
                       href="#" 
-                      className={`flex items-center gap-2 px-5 py-3 rounded-lg ${theme === 'dark' ? 
+                      className={`flex items-center gap-2 px-4 py-2 rounded-lg ${theme === 'dark' ? 
                         'bg-blue-700 hover:bg-blue-800' : 
-                        'bg-blue-600 hover:bg-blue-700'} text-white transition-colors`}
+                        'bg-blue-600 hover:bg-blue-700'} text-white transition-colors min-w-[120px]`}
                     >
                       <Linkedin size={18} />
                       LinkedIn
@@ -66,24 +68,33 @@ const About = () => {
                 </ParallaxSection>
               </div>
               
-              <div>
-                <ParallaxSection speed={0.15}>
-                  <div className={`p-6 rounded-xl ${theme === 'dark' ? 
+              <div className="flex flex-col items-center space-y-6 w-full">
+                <ParallaxSection speed={0.15} className="w-full flex justify-center">
+                  <ProfilePhoto 
+                    src="public/4278d193-4af1-4f40-ae87-855a0fd2e8e7.JPG" 
+                    alt="Gokulan" 
+                    className="w-48 h-48 md:w-56 md:h-56 mx-auto"
+                    themeAware
+                  />
+                </ParallaxSection>
+                
+                <ParallaxSection speed={0.15} className="w-full">
+                  <div className={`p-6 rounded-xl w-full ${theme === 'dark' ? 
                     'glass-effect-dark' : 
                     'glass-effect-light'}`}>
-                    <h3 className={`text-xl font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className={`text-xl font-semibold mb-4 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                       Personal Info
                     </h3>
-                    <ul className="space-y-3">
-                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    <ul className="space-y-3 text-sm">
+                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-justify`}>
                         <span className="font-medium">Name:</span>
                         <span>Gokulan</span>
                       </li>
-                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-justify`}>
                         <span className="font-medium">Email:</span>
-                        <span>gokulan@example.com</span>
+                        <span>gokulhope97@gmail.com</span>
                       </li>
-                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-justify`}>
                         <span className="font-medium">Location:</span>
                         <span>Coimbatore, IN</span>
                       </li>
@@ -98,6 +109,97 @@ const About = () => {
                     </ul>
                   </div>
                 </ParallaxSection>
+              </div>
+            </div>
+          </ParallaxSection>
+          
+          {/* Skills Section with 3D Flutter Logo */}
+          <ParallaxSection speed={0.07} className="mt-16">
+            <h2 className={`text-3xl font-bold mb-8 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+              My <span className={theme === 'dark' ? 'text-gradient' : 'text-gradient-light'}>Skills</span>
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div className="space-y-6">
+                <div className={`p-6 rounded-xl ${theme === 'dark' ? 'glass-effect-dark' : 'glass-effect-light'}`}>
+                  <h3 className={`text-xl font-semibold mb-4 flex items-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    <Code className="mr-2 text-purple-500" size={24} />
+                    Frontend Development
+                  </h3>
+                  <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Building beautiful, responsive user interfaces with modern web technologies and frameworks.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {['Flutter', 'React', 'TypeScript', 'Tailwind CSS', 'HTML5', 'CSS3'].map((skill) => (
+                      <span 
+                        key={skill}
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          theme === 'dark' 
+                            ? 'bg-gray-800 text-purple-300' 
+                            : 'bg-purple-100 text-purple-800'
+                        }`}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className={`p-6 rounded-xl ${theme === 'dark' ? 'glass-effect-dark' : 'glass-effect-light'}`}>
+                  <h3 className={`text-xl font-semibold mb-4 flex items-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    <Cpu className="mr-2 text-purple-500" size={24} />
+                    Backend & AI/ML
+                  </h3>
+                  <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Developing robust backend systems and implementing machine learning solutions.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {['Python', 'Node.js', 'FastAPI', 'TensorFlow', 'MongoDB', 'Firebase'].map((skill) => (
+                      <span 
+                        key={skill}
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          theme === 'dark' 
+                            ? 'bg-gray-800 text-purple-300' 
+                            : 'bg-purple-100 text-purple-800'
+                        }`}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className={`p-6 rounded-xl ${theme === 'dark' ? 'glass-effect-dark' : 'glass-effect-light'}`}>
+                  <h3 className={`text-xl font-semibold mb-4 flex items-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    <Smartphone className="mr-2 text-purple-500" size={24} />
+                    Mobile Development
+                  </h3>
+                  <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
+                    Creating cross-platform mobile applications with native performance.
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {['Flutter', 'Dart', 'React Native', 'Firebase', 'Bloc', 'Provider'].map((skill) => (
+                      <span 
+                        key={skill}
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          theme === 'dark' 
+                            ? 'bg-gray-800 text-purple-300' 
+                            : 'bg-purple-100 text-purple-800'
+                        }`}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              
+              {/* 3D Flutter Logo */}
+              <div className="h-full">
+                <Profile3D />
+                <p className={`mt-4 text-center italic ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                  Interactive 3D Profile - Drag to rotate
+                </p>
               </div>
             </div>
           </ParallaxSection>
