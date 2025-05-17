@@ -5,7 +5,7 @@ import ParallaxSection from './ParallaxSection';
 import AlienAttackScene from './OrbitingStars';
 import { createMouseParallaxEffect } from '@/utils/parallaxUtils';
 import { useTheme } from './ThemeProvider';
-import { FileText, Mail } from 'lucide-react';
+import { FileText, Mail, Github, Linkedin } from 'lucide-react';
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,6 +70,30 @@ const HeroSection = () => {
                 rounded-full font-medium transition-all duration-300 flex items-center gap-2 w-auto whitespace-nowrap`}>
               <FileText size={18} />
               View Resume
+            </a>
+          </div>
+          <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start">
+            <a 
+              href="https://github.com/GokulanV7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-4 py-2 rounded-lg ${theme === 'dark' ? 
+                'bg-gray-800 hover:bg-gray-700' : 
+                'bg-gray-200 hover:bg-gray-300'} ${theme === 'dark' ? 'text-white' : 'text-gray-900'} transition-colors flex items-center gap-2`}
+            >
+              <Github size={18} />
+              GitHub
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/gokulan-v-40424b293/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-4 py-2 rounded-lg ${theme === 'dark' ? 
+                'bg-blue-700 hover:bg-blue-800' : 
+                'bg-blue-600 hover:bg-blue-700'} text-white transition-colors flex items-center gap-2`}
+            >
+              <Linkedin size={18} />
+              LinkedIn
             </a>
           </div>
         </ParallaxSection>

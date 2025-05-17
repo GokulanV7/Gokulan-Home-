@@ -73,7 +73,7 @@ const Index = () => {
                     'border-purple-500 shadow-lg shadow-purple-500/20' : 
                     'border-purple-400 shadow-lg shadow-purple-400/10'}`}>
                     <img 
-                      src="/placeholder.svg" 
+                      src="/IMG_5145.jpg" 
                       alt="Gokulan" 
                       className="w-full h-full object-cover"
                     />

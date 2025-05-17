@@ -7,20 +7,17 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
-  // Check if current path matches the link
   const isActive = (path) => location.pathname === path;
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when path changes
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
@@ -39,71 +36,69 @@ const Navbar = () => {
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-           {/* Logo */}
-           <Link to="/" className="text-xl font-bold text-white hover:text-purple-200 transition-colors">
-             Gokulan
-           </Link>
+          {/* Logo */}
+          <Link to="/" className="text-xl font-bold text-white hover:text-purple-200 transition-colors">
+            Gokulan
+          </Link>
 
-           {/* Desktop Navigation */}
-           <div className="hidden md:flex md:items-center md:space-x-8">
-             {navLinks.map((link) => (
-               <Link
-                 key={link.path}
-                 to={link.path}
-                 className={`group relative px-2 py-1 text-sm font-medium transition-colors duration-300 ${
-                   isActive(link.path) 
-                     ? 'text-white' 
-                     : 'text-gray-300 hover:text-white'
-                 }`}
-               >
-                 {link.label}
-                 {/* Active indicator */}
-                 <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 transition-opacity duration-300 ${
-                   isActive(link.path) ? 'opacity-100' : 'opacity-0'
-                 }`} />
-                 {/* Hover indicator */}
-                 <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 transform transition-transform duration-300 scale-x-0 group-hover:scale-x-100 origin-left`} />
-               </Link>
-             ))}
-           </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:space-x-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={`group relative px-2 py-1 text-sm font-medium transition-colors duration-300 ${
+                  isActive(link.path) ? 'text-white' : 'text-gray-300 hover:text-white'
+                }`}
+              >
+                {link.label}
+                {/* Active indicator */}
+                <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 transition-opacity duration-300 ${
+                  isActive(link.path) ? 'opacity-100' : 'opacity-0'
+                }`} />
+                {/* Hover indicator */}
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-purple-500 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
+              </Link>
+            ))}
+          </div>
 
-           {/* Mobile menu button */}
-           <div className="md:hidden">
-             <button
-               type="button"
-               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-               className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 hover:bg-purple-800/20 focus:outline-none focus:ring-2 focus:ring-purple-500"
-               aria-expanded={mobileMenuOpen}
-             >
-               <span className="sr-only">
-                 {mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
-               </span>
-               {mobileMenuOpen ? (
-                 <X className="block h-6 w-6" aria-hidden="true" />
-               ) : (
-                 <Menu className="block h-6 w-6" aria-hidden="true" />
-               )}
-             </button>
-           </div>
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 hover:bg-purple-800/20 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              aria-expanded={mobileMenuOpen}
+            >
+              <span className="sr-only">
+                {mobileMenuOpen ? 'Close main menu' : 'Open main menu'}
+              </span>
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile menu, show/hide based on menu state */}
-      <div
-        className={`md:hidden fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out ${
-          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        {/* Background overlay */}
-        <div 
-          className={`fixed inset-0 z-60 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
-            mobileMenuOpen ? 'opacity-100' : 'opacity-0'
+      {/* Mobile Navigation */}
+      <div className="md:hidden">
+        {/* Overlay */}
+        <div
+          className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+            mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
           onClick={() => setMobileMenuOpen(false)}
         />
-        
-        {/* Menu panel */}
-        <div className="fixed inset-y-0 right-0 max-w-xs w-full z-50 bg-gradient-to-br from-purple-900/90 to-purple-700/90 backdrop-blur-md shadow-xl flex flex-col">
+
+        {/* Side Panel */}
+        <div
+          className={`fixed top-0 left-0 z-50 w-full h-screen bg-gradient-to-br from-purple-400/30 to-purple-600/30 backdrop-blur-md shadow-xl transform transition-transform duration-300 ease-in-out ${
+            mobileMenuOpen ? 'translate-y-0' : 'translate-y-full'
+          }`}
+        >
           <div className="p-6">
             <div className="flex items-center justify-between mb-8">
               <Link
@@ -115,10 +110,9 @@ const Navbar = () => {
               </Link>
               <button
                 type="button"
-                className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-purple-200 hover:bg-purple-800/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="p-2 rounded-md text-white hover:text-purple-200 hover:bg-purple-800/30 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="sr-only">Close menu</span>
                 <X className="h-6 w-6" aria-hidden="true" />
               </button>
             </div>

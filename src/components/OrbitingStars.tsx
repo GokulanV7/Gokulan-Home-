@@ -863,9 +863,9 @@ function SatelliteLauncherRocket({ onDeploySatellite, onLauncherMissionComplete 
     }
   });
   
+
   if (currentPhase === 'disappeared') return null;
-  
-  // Scale flame relative to attack rocket's flame, based on rocket scales
+    // Scale flame relative to attack rocket's flame, based on rocket scales
   const flameConeHeight = 1.6 * (SAT_ROCKET_SCALE / ROCKET_SCALE); 
   const flameConeRadius = 0.35 * (SAT_ROCKET_SCALE / ROCKET_SCALE);
   
@@ -882,6 +882,7 @@ function SatelliteLauncherRocket({ onDeploySatellite, onLauncherMissionComplete 
           color="orange" 
           intensity={flameRef.current && flameRef.current.visible ? (flameRef.current.material as THREE.MeshStandardMaterial).emissiveIntensity * 1.5 : 0} 
           distance={flameConeHeight * 1.2 * SAT_ROCKET_SCALE} 
+
           decay={2} 
           position={[0,0, -flameConeHeight ]} // Position light near flame tip
         /> 
@@ -999,8 +1000,7 @@ function Environment() {
     !attackRocketMissionDone;                       
 
   return (
-    <>
-      <ambientLight intensity={0.4} /> 
+    <>      <ambientLight intensity={0.4} /> 
       <directionalLight 
         position={[80, 60, 80]} intensity={2.5} color="#FFF5E1" castShadow 
         shadow-mapSize-width={4096} shadow-mapSize-height={4096}
@@ -1058,7 +1058,8 @@ function AlienAttackScene() {
         <React.Suspense fallback={null}>
           <Environment />
         </React.Suspense>
-        <OrbitControls minDistance={6} maxDistance={90} enablePan={true} panSpeed={0.7} zoomSpeed={0.7} />
+        <OrbitControls minDistance={6} maxDistance={90} enableZoom={false} enablePan={true} panSpeed={0.7} />
+
       </Canvas>
     </div>
   );
@@ -1066,3 +1067,4 @@ function AlienAttackScene() {
 
 export { AlienAttackScene };
 export default AlienAttackScene;
+      
