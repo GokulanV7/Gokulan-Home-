@@ -20,9 +20,9 @@ const About = () => {
               About <span className={theme === 'dark' ? 'text-gradient' : 'text-gradient-light'}>Me</span>
             </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Text and Buttons Section - Add bottom margin on mobile */}
-              <div className="md:col-span-2 mb-8 md:mb-0">
+              <div className="md:col-span-2 mb-8 md:mb-0 lg:col-span-2">
                 <ParallaxSection speed={0.1} className="space-y-6">
                   <p className={`text-lg leading-relaxed text-justify ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     I'm Gokulan, a passionate Flutter developer and Computer Science student at Shri Shakthi College. I build elegant cross-platform apps and AI-driven systems using Flutter, Python, FastAPI, and ML.
@@ -36,7 +36,7 @@ const About = () => {
                     When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and sharing knowledge with the developer community.
                   </p>
 
-                  <div className="flex flex-wrap gap-6 pt-12 justify-center">
+                  <div className="flex flex-wrap gap-4 pt-12 justify-center md:justify-start w-full">
                     <a
                       href="#"
                       className={`flex items-center gap-2 px-4 py-2 rounded-lg ${theme === 'dark' ?
@@ -76,7 +76,7 @@ const About = () => {
               {/* On mobile, this section will stack below the first section */}
               {/* The space-y-24 is between the photo and personal info *within* this column */}
               {/* The mb-8 md:mb-0 on the first column adds space *between* the columns on mobile */}
-              <div className="flex flex-col items-center space-y-24 w-full">
+              <div className="flex flex-col items-center space-y-24 w-full md:items-start">
                 {/* Profile Photo - Now visible on all screen sizes */}
                 <ParallaxSection speed={0.15} className="w-full flex justify-center"> {/* Removed hidden md:flex */}
                   <ProfilePhoto
@@ -92,15 +92,15 @@ const About = () => {
                   <div className={`p-6 rounded-xl w-full ${theme === 'dark' ?
                     'glass-effect-dark' :
                     'glass-effect-light'}`}>
-                    <h3 className={`text-xl font-semibold mb-4 text-center ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                    <h3 className={`text-xl font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'} text-center md:text-left`}>
                       Personal Info
                     </h3>
-                    <ul className="space-y-3 text-sm">
-                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-justify`}>
+                    <ul className="space-y-3 text-sm md:text-left text-center">
+                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-center md:text-left`}>
                         <span className="font-medium">Name:</span>
                         <span>Gokulan</span>
                       </li>
-                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-justify`}>
+                      <li className={`flex justify-between ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'} text-center md:text-left`}>
                         <span className="font-medium">Email:</span>
                         <span>gokulhope97@gmail.com</span>
                       </li>
